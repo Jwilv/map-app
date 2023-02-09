@@ -20,8 +20,9 @@ export const useMapbox = (startingPoint) => {
     const marcadores = useRef({});
 
     //observables de rxjs
-    //const moveMarker = 
-    const newMarker = useRef( new Subject())
+    const moveMarker = useRef( new Subject());
+
+    const newMarker = useRef( new Subject());
 
     //agregar marcadores 
     const addMarker = useCallback(({ lngLat }) => {
@@ -47,6 +48,11 @@ export const useMapbox = (startingPoint) => {
         marker.on('drag', ({ target }) => {
             const { id } = target;
             const { lng, lat } = target.getLngLat();
+            moveMarker.current.next({
+                id,
+                lng,
+                lat,
+            })
         })
 
     }, [])
@@ -84,6 +90,7 @@ export const useMapbox = (startingPoint) => {
     return {
         addMarker,
         coords,
+        moveMarker$: moveMarker.current,
         newMarker$ : newMarker.current,
         setRef,
     }
