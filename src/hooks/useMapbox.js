@@ -19,7 +19,7 @@ export const useMapbox = (startingPoint) => {
     const marcadores = useRef({});
 
     //agregar marcadores 
-    const addMarker = useCallback(({lngLat}) => {
+    const addMarker = useCallback(({ lngLat }) => {
         const { lng, lat } = lngLat
         const marker = new mapboxgl.Marker();
         marker.id = uuidv4();
@@ -30,6 +30,14 @@ export const useMapbox = (startingPoint) => {
             .setDraggable(true)
 
         marcadores.current[marker.id] = marker;
+
+        //drag
+
+        marker.on('drag', ({ target }) => {
+            const { id } = target;
+            const { lng, lat } = target.getLngLat();
+        })
+
     }, [])
 
     useEffect(() => {
