@@ -13,35 +13,35 @@ export const MapPage = () => {
 
     const mapDiv = useRef();
 
-    const [ mapa, setMapa] = useState();
+    const mapa = useRef();
 
     const [coords, setCoords ] = useState(startingPoint)
 
 
     useEffect(() => {
-        const map = new mapboxgl.Map({
+        const startmapa = new mapboxgl.Map({
             container: mapDiv.current,
             style: 'mapbox://styles/mapbox/streets-v11',
             zoom:startingPoint.zoom,
             center:[startingPoint.lng,startingPoint.lat]
         });
 
-        setMapa(map);
+        mapa.current = startmapa ;
 
     }, [])
 
     useEffect(()=>{
-        mapa?.on('move',()=>{
-            const { lng, lat} = mapa.getCenter();
+        mapa.current?.on('move',()=>{
+            const { lng, lat} = mapa.current.getCenter();
             setCoords({
                 lng : lng.toFixed(4),
                 lat : lat.toFixed(4),
-                zoom : mapa.getZoom().toFixed(2),
+                zoom : mapa.current.getZoom().toFixed(2),
             })
     })
 
-    return mapa?.off('move')
-    },[mapa])
+    return mapa.current?.off('move')
+    },[])
 
     return (
         <>
