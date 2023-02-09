@@ -30,6 +30,18 @@ export const MapPage = () => {
 
     }, [])
 
+    useEffect(()=>{
+        mapa?.on('move',()=>{
+            const { lng, lat} = mapa.getCenter();
+            setCoords({
+                lng : lng.toFixed(4),
+                lat : lat.toFixed(4),
+                zoom : mapa.getZoom().toFixed(2),
+            })
+    })
+
+    return mapa?.off('move')
+    },[mapa])
 
     return (
         <>
