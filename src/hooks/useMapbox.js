@@ -1,20 +1,22 @@
-import mapboxgl from 'mapbox-gl'
+import mapboxgl, { Marker } from 'mapbox-gl'
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4} from 'uuid'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibXJ3aWx2IiwiYSI6ImNsZHc5bmNvdzA1OGczcHFmb3pxMmphemQifQ._Xg8PGF33M-DbfCb0VpT6g';
 
 
 export const useMapbox = (startingPoint) => {
-//ref al div del mapa
+    //ref al div del mapa
     const mapDiv = useRef();
-    const setRef = useCallback((node)=>{
+    const setRef = useCallback((node) => {
         mapDiv.current = node
-    },[])
+    }, [])
 
     const mapa = useRef();
 
     const [coords, setCoords] = useState(startingPoint)
 
+    const marcadores = useRef({});
 
     useEffect(() => {
         const startmapa = new mapboxgl.Map({
@@ -38,7 +40,23 @@ export const useMapbox = (startingPoint) => {
             })
         })
 
-        return mapa.current?.off('move')
+        // return mapa.current?.off('move')
+    }, [])
+
+    useEffect(() => {
+        mapa.current?.on('click', (event) => {
+            const { lng, lat } = event.lngLat
+            const marker = new mapboxgl.Marker();
+            marker.id = uuidv4();
+
+            marker
+            .setLngLat([lng, lat])
+            .addTo(mapa.current)
+            .setDraggable(true)
+
+            marcadores.current[marker.id] = marker;
+        })
+        // return (mapa.current?.off('click'))
     }, [])
 
     return {
