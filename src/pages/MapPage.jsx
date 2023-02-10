@@ -24,6 +24,13 @@ export const MapPage = () => {
         moveMarker$.subscribe( data => console.log(data))
     },[moveMarker$])
 
+useEffect(() => {
+    socket.on('new-marker',(marker)=>{
+
+    });
+}, [socket])
+
+
     return (
         <>
         <div className="info">
