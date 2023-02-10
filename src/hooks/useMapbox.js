@@ -25,8 +25,8 @@ export const useMapbox = (startingPoint) => {
     const newMarker = useRef( new Subject());
 
     //agregar marcadores 
-    const addMarker = useCallback(({ lngLat }) => {
-        const { lng, lat } = lngLat
+    const addMarker = useCallback((event) => {
+        const { lng, lat } = event.lngLat || event
         const marker = new mapboxgl.Marker();
         marker.id = uuidv4();
 
