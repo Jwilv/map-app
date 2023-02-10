@@ -38,10 +38,12 @@ export const useMapbox = (startingPoint) => {
         marcadores.current[marker.id] = marker;
 
         //Subject del newMarker
-        newMarker.current.next({
-            id : marker.id,
-            lng,lat
-        })
+        if(!id){
+            newMarker.current.next({
+                id : marker.id,
+                lng,lat
+            })
+        }
 
         //drag
 

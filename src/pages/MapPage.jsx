@@ -17,7 +17,7 @@ export const MapPage = () => {
     useEffect(() => {
         socket.on('markers-active', (marker)=>{
             for(const key of Object.keys(marker)){
-                addMarker(marker[key]);
+                addMarker(marker[key], key);
             }
         })
     }, [socket])
