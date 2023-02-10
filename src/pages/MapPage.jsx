@@ -20,12 +20,12 @@ export const MapPage = () => {
                 addMarker(marker[key], key);
             }
         })
-    }, [socket])
+    }, [socket,addMarker])
     
 
     useEffect(()=>{
-        newMarker$.subscribe( marcador =>{
-            socket.emit('new-marker',marcador)
+        newMarker$.subscribe( marker =>{
+            socket.emit('new-marker',marker)
         })
     },[newMarker$,socket])
 
@@ -35,9 +35,9 @@ export const MapPage = () => {
 
 useEffect(() => {
     socket.on('new-marker',(marker)=>{
-
+        addMarker(marker, marker.id)
     });
-}, [socket])
+}, [socket,addMarker])
 
 
     return (
