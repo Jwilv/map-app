@@ -35,6 +35,12 @@ export const MapPage = () => {
         })
     },[moveMarker$, socket])
 
+    useEffect(()=>{
+        socket.on('update-marker',(marker)=>{
+
+        })
+    },[socket])
+
 useEffect(() => {
     socket.on('new-marker',(marker)=>{
         addMarker(marker, marker.id)
