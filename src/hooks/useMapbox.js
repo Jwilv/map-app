@@ -44,12 +44,6 @@ export const useMapbox = (startingPoint) => {
                 lng,lat
             })
         }
-
-        //update position
-        const updatePositionMaker = ({id, lng, lat})=>{
-            marcadores.current[id].setLngLat([lng, lat])
-        }
-
         //drag
 
         marker.on('drag', ({ target }) => {
@@ -63,6 +57,12 @@ export const useMapbox = (startingPoint) => {
         })
 
     }, [])
+
+            //update position
+            const updatePositionMaker = ({id, lng, lat})=>{
+                marcadores.current[id].setLngLat([lng, lat])
+            }
+    
 
     useEffect(() => {
         const startmapa = new mapboxgl.Map({
