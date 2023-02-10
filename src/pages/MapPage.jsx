@@ -12,7 +12,16 @@ export const MapPage = () => {
 
     const { socket } = useContext( SocketContext );
 
-    const {coords, setRef, newMarker$, moveMarker$} = useMapbox(startingPoint);
+    const {coords, setRef, newMarker$, moveMarker$, addMarker} = useMapbox(startingPoint);
+
+    useEffect(() => {
+        socket.on('markers-active', (marker)=>{
+            for(const key of Object.keys(marker)){
+                addMarker(marker[key]);
+            }
+        })
+    }, [socket])
+    
 
     useEffect(()=>{
         newMarker$.subscribe( marcador =>{
