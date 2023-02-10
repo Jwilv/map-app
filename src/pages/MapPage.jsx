@@ -30,8 +30,10 @@ export const MapPage = () => {
     },[newMarker$,socket])
 
     useEffect(()=>{
-        moveMarker$.subscribe( data => console.log(data))
-    },[moveMarker$])
+        moveMarker$.subscribe( (marker) =>{
+            socket.emit('update-marker', marker)
+        })
+    },[moveMarker$, socket])
 
 useEffect(() => {
     socket.on('new-marker',(marker)=>{
